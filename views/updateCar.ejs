@@ -1,0 +1,58 @@
+<style>
+  .form-control{
+    background: #FFFFFF;
+    border: 1px solid #D0D0D0;
+    border-radius: 2px;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    color: #8A8A8A;
+  }
+</style>
+
+<h5 class="title mb-4"><%= title %></h5>
+
+<form method="post" action="/car/update/<%= carsDetail.id %>" enctype="multipart/form-data">
+  <div class="form mb-5 p-4">
+      <div class="row mb-3 align-items-center ">
+        <div class="col-2">
+          <label for="name" class="form-label">Nama<span style="color: red;">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="text" class="form-control" value="<%= carsDetail.name %>" id="name" name="name" required style="width: 340px;"/>
+        </div>
+      </div>
+
+      <div class="row mb-3 align-items-center">
+        <div class="col-2">
+          <label for="price" class="form-label">Sewa Per Hari<span style="color: red;">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="number" step="10000" class="form-control" value="<%= carsDetail.price %>" id="price" name="price" required style="width: 340px;"/>
+        </div>
+      </div>
+
+      <div class="row mb-3 align-items-center">
+        <div class="col-2">
+          <label for="size" class="form-label">Ukuran<span style="color: red;">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="text" class="form-control" id="size" value="<%= carsDetail.size %>" name="size" required style="width: 340px;"/>
+        </div>
+      </div>
+
+      <div class="row mb-3 align-items-center">
+        <div class="col-2">
+          <label for="image" class="form-label">Foto<span style="color: red;">*</span></label>
+        </div>
+        <div class="col-10">
+          <input type="file" class="form-control" id="image" name="image" required style="width: 340px;"/>
+          <div class="form-text" id="basic-addon4" style="font-weight: 300;
+          font-size: 11px;">File size max. 2MB</div>
+        </div>
+      </div>
+  </div>
+
+    <a href="/"><button type="button" class="btn btn-outline-primary btn-cancel">Cancel</button></a>
+    <button type="submit" class="btn btn-primary ms-3">Save</button>
+</form>
