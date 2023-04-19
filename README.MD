@@ -1,5 +1,5 @@
 # Binar Car Rental Dashboard Management 
-Admin dashboard management for Binar Car Rental, build with express js and ejs view engine
+Admin dashboard management for Binar Car Rental, build with express js and ejs as view engine
 
 ## Get Started 🔥  
 You can start by installing all the dependencies that I use. I will explain the purpose of each dependency later.
