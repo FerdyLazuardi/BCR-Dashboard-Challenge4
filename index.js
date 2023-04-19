@@ -4,7 +4,6 @@ const { cars } = require('./models')
 const { Op, where } = require('sequelize');
 const multer = require('multer');
 const expressLayouts = require('express-ejs-layouts');
-const moment = require('moment');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
