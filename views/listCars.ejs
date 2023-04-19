@@ -1,3 +1,17 @@
+<!-- flash message add/update -->
+<% if (msg.length > 0) { %>
+    <div class="alert alert-success" role="alert">
+        <%= msg %>
+    </div>
+<% } %>
+
+<!-- flash message delete -->
+<% if (del.length > 0) { %>
+    <div class="alert alert-dark" role="alert">
+        <%= del %>
+    </div>
+<% } %>
+ 
 <div class="row">
     <div class="col-auto me-auto">
         <h5 class="title"><%= title %></h5>
@@ -8,30 +22,53 @@
     </div>
 </div>
 
-<a href="/car" class="btn btn-outline-primary btn-filter">All</a>
-<a href="/car?filter=small" class="btn btn-outline-primary btn-filter">Small</a>
-<a href="/car?filter=medium" class="btn btn-outline-primary btn-filter">Medium</a>
-<a href="/car?filter=large" class="btn btn-outline-primary btn-filter">Large</a>
+<!-- button filter -->
+<a href="/car" class="btn btn-outline-primary btn-filter me-2 <%= currentFilter === undefined ? 'active' : '' %>" >All</a>
+<a href="/car?filter=small" class="btn btn-outline-primary btn-filter me-2 <%= currentFilter === 'small' ? 'active' : '' %>">Small</a>
+<a href="/car?filter=medium" class="btn btn-outline-primary btn-filter me-2 <%= currentFilter === 'medium' ? 'active' : '' %>">Medium</a>
+<a href="/car?filter=large" class="btn btn-outline-primary btn-filter <%= currentFilter === 'large' ? 'active' : '' %>">Large</a>
 
-<div class="row">
-    <% Cars.forEach(cars => { %>
-        <div class="col-xl-3 col-lg-4 col-md-6 ">
-            <div class="card mt-5 card-edit">
+<div class="row mt-2">
+    <!-- loop data cars using foreach method array -->
+    <% Cars.forEach(cars => { %> 
+        <div class="col-lg-4 col-md-6">
+            <div class="card mt-4 card-edit">
                 <img src="/image/<%= cars.id %>" class="card-img-top p-3" style="height:222px; object-fit:cover">
                 <div class="card-body pt-0">
                     <h5 class="card-title"><%= cars.name %></h5>
                     <p class="card-text card-price">Rp <%= cars.price %> / hari</p>
                     <p class="card-text"><img src="/assets/fi_clock.svg" style="margin-right: 6px;" alt="vector">
                         <small class="text-body-secondary">
-                            <%= `Updated at ${new Date(cars.updatedAt).toLocaleDateString('id-ID', { day: 'numeric', year: 'numeric', month: 'long',  hour: 'numeric', minute: 'numeric'}).replace("pukul","|")}` %>
+                            <!-- format date -->
+                            <%= `Updated at ${new Date(cars.updatedAt).toLocaleDateString('id-ID', { day: 'numeric', 
+                            year: 'numeric', month: 'long',  hour: 'numeric', minute: 'numeric'}).replace("pukul","|")}` %>
                         </small></p>
                     <div class="row">
                         <div class="col-6">
-                            <form action="/delete/<%= cars.id %>" method="post">
+                                <!-- triggere modal button -->
                                 <button class="btn btn-outline-danger btn-list-delete mb-2 d-flex 
-                                align-items-center me-2 w-100 justify-content-center" style="height: 40px;">
+                                align-items-center me-2 w-100 justify-content-center" data-bs-toggle="modal" 
+                                data-bs-target="#exampleModal<%= cars.id %>" style="height: 40px;">
                                 <i class="fa-regular fa-trash-can me-2"></i>Delete</button>
-                            </form> 
+
+                                <!-- modal -->
+                                <div class="modal fade" id="exampleModal<%= cars.id %>" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                      <div class="modal-content">
+                                        <div class="modal-body d-flex flex-column align-items-center text-center">
+                                            <img src="/assets/img-BeepBeep.svg" alt="car">
+                                            <h4 class="mt-4 mb-4 title-modal">Menghapus Data Mobil</h4>
+                                            <p class="title-text mb-0">Setelah dihapus, data mobil tidak dapat dikembalikan. Yakin ingin menghapus</p>
+                                        </div>
+                                        <div class="modal-body d-flex justify-content-center pt-2">
+                                            <form action="/delete/<%= cars.id %>" method="post">
+                                                <button id="confirm-delete"  class="btn btn-primary me-3">Ya</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Tidak</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
                         </div>
                         <div class="col-6">
                             <a href="/update/<%= cars.id %>" class="btn btn-success btn-list-edit d-flex 
@@ -43,4 +80,5 @@
             </div>
         </div>
     <% }) %>
+  
 </div>

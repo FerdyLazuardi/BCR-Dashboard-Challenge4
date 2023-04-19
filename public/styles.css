@@ -110,13 +110,43 @@ body{
 
 .sidebar{
     width: 290px;
-    background-color: #091B6F;
+    background-color: #0D28A6;
     color: white;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     z-index: 999;
+}
+
+/* for acrtive sidebar */
+.sidebar-active{
+    margin-left:290px;
+}
+
+/* for acrtive sidebar to make container move to right */
+.cont-active{
+    margin-left:290px;
+}
+
+.title-sidebar{
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.list-sidebar{
+    color: #8A8A8A;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.list-active{
+    background: #CFD4ED;
+}
+
+.title-active{
+    height: 64px;
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .breadcrumb a{
@@ -179,6 +209,13 @@ body{
     color: var(--primary-color-darkblue05)!important;
     background-color: #CFD4ED!important;
     border: 1px solid #0D28A6!important;
+}
+
+.btn.active{
+    color: #0D28A6;
+    background: #CFD4ED;
+    border: 1px solid #0D28A6;
+    border-radius: 2px;
 }
 
 .card-edit {
@@ -259,4 +296,59 @@ body{
 .form-label{
     font-weight: 300;
     font-size: 14px;
+}
+
+.alert-success{
+    background: #73CA5C;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    width: 50%;
+    margin: 0 auto;
+    color: #fff;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.alert-dark{
+    background: #151515;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    width: 50%;
+    margin: 0 auto;
+    font-style: normal;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.title-modal{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.title-text{
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.btn-close-modal{
+    background-color: #fff;
+    border: 1px solid #0D28A6;
+    border-radius: 2px;
+    color: var(--primary-color-darkblue04);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.btn-close-modal:hover{
+    color: var(--primary-color-darkblue05);
+    background-color: #CFD4ED;
+    border: 1px solid #0D28A6;
 }

@@ -5,6 +5,9 @@ const { Op, where } = require('sequelize');
 const multer = require('multer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const flash = require('connect-flash');
 const path = require('path');
 const PORT = 3000;
 
@@ -19,22 +22,33 @@ app.use(express.urlencoded({ extended: true }));
 // acces folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// configuration flash
+app.use(cookieParser('secret'));
+app.use(session({
+    cookie : { maxAge: 6000},
+    secret : 'secret',
+    resave : false,
+    saveUninitialized : false,
+ })
+);
+app.use(flash());
+
 app.get('/', (req,res) => {
   res.redirect('/car')
 })
 
+// get car
 app.get('/car', async (req,res) => {
+
+  // create breadcrumb for name link
   const breadcrumb = [
     {name : 'Cars', url : '/car'},
     {name : 'List Car', url : '/car'},
   ]
 
-  const carsUpdate = await cars.findAll({
-    attributes : ['createdAt'],
-  })
-  const formattedDate = carsUpdate.map(car => moment(car.createdAt).format('DD MMMM YYYY, HH.mm'))
-  console.log(formattedDate)
+  let currentFilter = req.query.filter;
 
+  // validation by query (filter size)
   if(req.query.filter){
     const Cars = await cars.findAll({
       where : {
@@ -47,11 +61,15 @@ app.get('/car', async (req,res) => {
       layout : 'layouts/layout',
       title : 'List Car',
       breadcrumb,
-      formattedDate,
-      carsUpdate,
-      Cars
+      Cars,
+      currentFilter,
+      msg: req.flash('msg'),
+      del: req.flash('del')
     });
-  } else if(req.query.search){
+  } 
+
+    // validation for query search
+    else if(req.query.search){
     const Cars = await cars.findAll({
       where : {
         name : {
@@ -63,25 +81,29 @@ app.get('/car', async (req,res) => {
       layout : 'layouts/layout',
       title : 'List Car',
       breadcrumb,
-      formattedDate,
-      carsUpdate,
-      Cars
+      Cars,
+      currentFilter,
+      msg: req.flash('msg'),
+      del: req.flash('del')
     });
   }
+
+  // show find all without query
     else {
     const Cars = await cars.findAll()
-    
     res.render('listCars', {
         layout : 'layouts/layout',
         title : 'List Car',
         breadcrumb,
-        formattedDate,
-        carsUpdate,
-        Cars
+        Cars,
+        currentFilter,
+        msg: req.flash('msg'),
+        del: req.flash('del')
     });
    } 
 })
 
+// link to page add
 app.get('/add', (req,res) => {
   const breadcrumb = [
     {name : 'Cars', url : '/car'},
@@ -106,6 +128,7 @@ app.get('/image/:id', async (req, res) => {
   }
 });
 
+// configuration multer save to local disk public directory
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, 'uploads/')
@@ -117,6 +140,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// post a new car with image
 app.post('/car/add', upload.single('image'), async (req, res) => {
   const { name, price, size } = req.body;
   const filename = req.file.filename;
@@ -127,12 +151,16 @@ app.post('/car/add', upload.single('image'), async (req, res) => {
       size: size,
       image: filename
     });
+
+    // send flash message succes
+    req.flash('msg','Data Berhasil Disimpan')
     res.redirect('/car');
   } catch (error) {
     console.error(error);
   }
 });
 
+// link to page update by id
 app.get('/update/:id', async (req,res) => {
   const breadcrumb = [
     {name : 'Cars', url : '/car'},
@@ -148,6 +176,7 @@ app.get('/update/:id', async (req,res) => {
   });
 })
 
+// update data cars byy id
 app.post('/car/update/:id', upload.single('image'), async (req, res) => {
   const id = req.params.id
   const { name, price, size } = req.body;
@@ -163,12 +192,14 @@ app.post('/car/update/:id', upload.single('image'), async (req, res) => {
         id
       }
     });
+    req.flash('msg','Data Berhasil Diupdate')
     res.redirect('/car');
   } catch (error) {
     console.error(error);
   }
 });
 
+// delete cars by id
 app.post('/delete/:id', async (req,res) => {
   const id = req.params.id
   await cars.destroy({
@@ -176,10 +207,12 @@ app.post('/delete/:id', async (req,res) => {
       id
     }
   })
-  console.log(id)
+
+  req.flash('del','Data Berhasil Dihapus') // flash message delete
   res.redirect('/car')
 })
 
+// run server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

@@ -1,16 +1,37 @@
-  <!-- <div class="sidebar">
-      <div class="row">
-        <div class="col-4">
-          <h2>test</h2>
-        </div>
-        <div class="col-8">
-          <h2>cba</h2>
-        </div>
+<script>
+  let menuBtn = document.querySelector("#menu");
+  let sideBar = document.querySelector("#sidebar");
+  let container = document.querySelector('main')
+
+  menuBtn.addEventListener("click", ()=>{
+    sideBar.classList.toggle("sidebar-active")
+    container.classList.toggle("cont-active")
+  })
+</script>
+
+<div id="sidebar" class="sidebar row justify-content-center">
+    <div class="col-4 text-center pe-0 mt-3">
+      <p><img src="/assets/Rectangle 63.svg"  alt="vector"></p>
+      <img src="/assets/Group 2.svg" alt="vector">
+      <p class="title-sidebar mt-1 mb-2">Dashboard</p>
+      <div class="title-active d-flex flex-column justify-content-center align-items-center">
+        <img src="/assets/fi_truck.svg" alt="vector">
+        <p class="title-sidebar fw-bold mb-0 mt-1">Cars</p>
       </div>
-    </div> -->
+    </div>
+    
+    <div class="col-8 d-flex flex-column px-0" style="background-color: white;">
+      <p class="ms-3 mt-3"><img src="/assets/Rectangle 62.svg"  alt="vector"></p>
+      <p class="list-sidebar ms-3" style="margin-top:30px;">Cars</p>
+      <div class="list-active pt-2 pb-2" style="margin-top:4px;">
+        <p class="list-sidebar ms-3 mb-0 fw-bold" style="color:#151515;">List Car</p>
+      </div>
+    </div>
+</div>
+    
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #fff!important;">
     <div class="container-fluid">
-    <span class="navbar-toggler-icon"></span>
+    <span id="menu"  class="navbar-toggler-icon" style="margin-left: 290px;"></span>
     <div class="d-flex align-items-center">
         <form class="d-flex" role="search">
         <div class="input-group">
