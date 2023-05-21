@@ -5,7 +5,7 @@ Admin dashboard management for Binar Car Rental, build with express js and ejs a
 You can start by installing all the dependencies that I use. I will explain the purpose of each dependency later.
 
 ```sh  
-  npm i express ejs express-ejs-layouts connect-flash cookie-parser express-session multer nodemon pg sequelize sequelize-cli
+  npm i 
 ```    
 After installing all dependencies, you can run the application by opening the terminal and type
 
